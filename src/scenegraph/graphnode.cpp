@@ -4,10 +4,18 @@
 
 namespace Scenegraph
 {
-	GraphNode::GraphNode()
+	/*!
+	 * \brief default ctor
+	 */
+	GraphNode::GraphNode() :
+		m_localToWorldDirty(true),
+		m_worldToLocalDirty(true)
 	{
 	}
 
+	/*!
+	 * \brief default dtor
+	 */
 	GraphNode::~GraphNode()
 	{
 		if (getParent())
@@ -21,6 +29,13 @@ namespace Scenegraph
 		}
 	}
 
+	/*!
+	 * \brief Adds a child node to this graph node
+	 * \param pChild the child to add
+	 * \return Errors::None if successfull
+	 *		Errors::NullArgument if pChild was null
+	 *		Errors::ChildExists if pChild is already in this node
+	 */
 	GraphNode::Errors GraphNode::addChild(GraphNode* pChild)
 	{
 		if (!pChild)
@@ -39,6 +54,13 @@ namespace Scenegraph
 		return Errors::None;
 	}
 
+	/*!
+	 * \brief removes a child from this graph node
+	 * \param pChild the child to remove
+	 * \return Errors::None on success
+	 *		Errors::NullArgument if pChild was null
+	 *		additional errors possible
+	 */
 	GraphNode::Errors GraphNode::removeChild(GraphNode* pChild)
 	{
 		if (!pChild)
@@ -59,23 +81,51 @@ namespace Scenegraph
 		return Errors::None;
 	}
 
+	/*!
+	 * \brief Determines if this node contains a child
+	 * \param pChild the child that we're looking for
+	 * \return true if pChild is contained herein
+	 */
 	bool GraphNode::hasChild(GraphNode* pChild)
 	{
 		return findChild(pChild, nullptr) == Errors::None;
 	}
 
+	/*!
+	 * \brief Gets the parent of this graph node
+	 * \return this node's parent
+	 * \todo inline in the header!
+	 */
 	GraphNode* GraphNode::getParent() const
 	{
 		return m_pParent;
 	}
 
+	/*!
+	 * \brief Sets the parent node of this object
+	 * \param pParent the new parent
+	 * \note this is called automatically when adding or removing children,
+	 *		this will therefore fail to remove itself from the parent's
+	 *		children if called outside of this context
+	 */
 	void GraphNode::setParent(GraphNode* pParent)
 	{
 		// WARNING: only call from add child or remove child
 		m_pParent = pParent;
 	}
 
-	GraphNode::Errors GraphNode::findChild(GraphNode* pChild, std::vector<GraphNode*>::iterator* pOutIterator)
+	/*!
+	 * \brief Finds a child in this graph node
+	 * \param pChild the child to find
+	 * \param pOutIterator an iterator representing this child
+	 * \return Errors::None on success
+	 *		Errors::NullArgument if there isn't any iterator in which to store
+	 *			the result
+	 *		Errors::NotFound if the child isn't found
+	 */
+	GraphNode::Errors GraphNode::findChild(
+			GraphNode* pChild,
+			std::vector<GraphNode*>::iterator* pOutIterator)
 	{
 		if (!pOutIterator)
 		{
