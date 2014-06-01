@@ -7,6 +7,7 @@ aux_source_directory(src/scenegraph SRC_LIST)
 add_executable(${PROJECT_NAME} ${SRC_LIST})
 
 # glm
+add_subdirectory(libs/glm)
 include_directories(libs/glm)
 
 # link in glfw
