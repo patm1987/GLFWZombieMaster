@@ -1,6 +1,7 @@
 #include "graphnode.h"
 
 #include <algorithm>
+#include <glm/gtx/transform.hpp>
 
 namespace Scenegraph
 {
@@ -9,7 +10,10 @@ namespace Scenegraph
 	 */
 	GraphNode::GraphNode() :
 		m_localToWorldDirty(true),
-		m_worldToLocalDirty(true)
+		m_worldToLocalDirty(true),
+		m_scale(1.f, 1.f, 1.f),
+		m_rotation(1.f, 0.f, 0.f, 0.f),
+		m_position(0.f, 0.f, 0.f)
 	{
 	}
 
@@ -102,6 +106,33 @@ namespace Scenegraph
 	}
 
 	/*!
+	 * \brief generates a transform that takes an object from local space to
+	 *		world space
+	 * \return the transform that takes any local object to world space
+	 */
+	const glm::mat4x4& GraphNode::getLocalToWorldTransform()
+	{
+		if (m_localToWorldDirty)
+		{
+			generateLocalToWorldMatrix();
+		}
+		return m_localToWorld;
+	}
+
+	/*!
+	 * \brief gets the transform that takes any world object to local space
+	 * \return the transform from world space to local space
+	 */
+	const glm::mat4x4& GraphNode::getWorldToLocalTransform()
+	{
+		if (m_worldToLocalDirty)
+		{
+			generateWorldToLocalMatrix();
+		}
+		return m_worldToLocal;
+	}
+
+	/*!
 	 * \brief Sets the parent node of this object
 	 * \param pParent the new parent
 	 * \note this is called automatically when adding or removing children,
@@ -111,7 +142,11 @@ namespace Scenegraph
 	void GraphNode::setParent(GraphNode* pParent)
 	{
 		// WARNING: only call from add child or remove child
-		m_pParent = pParent;
+		if (pParent != m_pParent)
+		{
+			m_pParent = pParent;
+			invalidateTransforms();
+		}
 	}
 
 	/*!
@@ -143,5 +178,61 @@ namespace Scenegraph
 			*pOutIterator = result;
 		}
 		return Errors::None;
+	}
+
+	/*!
+	 * \brief generates the local to world matrix
+	 * \note This should typically be gated by the m_localToWorldDirty flag
+	 */
+	void GraphNode::generateLocalToWorldMatrix()
+	{
+		glm::mat4x4 scale = glm::scale(m_scale);
+		glm::mat4x4 rot = glm::mat4_cast(m_rotation);
+		glm::mat4x4 trans = glm::translate(m_position);
+
+		glm::mat4x4 local = trans * rot * scale;
+
+		if (m_pParent)
+		{
+			m_localToWorld = m_pParent->getLocalToWorldTransform() * local;
+		}
+		else
+		{
+			m_localToWorld = local;
+		}
+
+		m_localToWorldDirty = false;
+	}
+
+	/*!
+	 * \brief generates the world to local matrix
+	 * \note should typically be gated by the m_worldToLocalDirty flag
+	 */
+	void GraphNode::generateWorldToLocalMatrix()
+	{
+		glm::mat4x4 scale = glm::scale(1f / m_scale);
+		glm::mat4x4 rot = glm::mat4_cast(glm::conjugate(m_rotation));
+		glm::mat4x4 translation = glm::translate(-m_position);
+
+		glm::mat4x4 local = scale * rot * trans;
+		if (m_pParent)
+		{
+			m_worldToLocal = local * m_pParent->getWorldToLocalTransform();
+		}
+		else
+		{
+			m_worldToLocal = local;
+		}
+
+		m_worldToLocalDirty = false;
+	}
+
+	/*!
+	 * \brief invalidates all matrices
+	 */
+	void GraphNode::invalidateTransforms()
+	{
+		m_localToWorldDirty = true;
+		m_worldToLocalDirty = true;
 	}
 }
