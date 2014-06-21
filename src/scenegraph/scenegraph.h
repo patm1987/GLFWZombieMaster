@@ -1,6 +1,8 @@
 #ifndef SCENEGRAPH_H
 #define SCENEGRAPH_H
 
+#include "graphnode.h"
+
 namespace Scenegraph{
 	class GraphNode;
 
@@ -9,8 +11,11 @@ namespace Scenegraph{
 	public:
 		Scenegraph();
 
+		GraphNode::Errors addNode(GraphNode* pNode);
+		GraphNode::Errors removeNode(GraphNode* pNode);
+
 	private:
-		GraphNode* pRoot;
+		GraphNode m_root;
 	};
 }
 

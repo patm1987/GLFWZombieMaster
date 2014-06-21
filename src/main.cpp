@@ -1,5 +1,8 @@
 #include <GLFW/glfw3.h>
 
+#include "entity/entity.h"
+#include "utils/autolist.h"
+
 static const int kWindowWidth = 640;
 static const int kWindowHeight = 480;
 static const char* kWindowTitle = "GLFWZombieMaster";
@@ -24,6 +27,14 @@ int main()
 
 	while(!glfwWindowShouldClose(pGlfwWindow))
 	{
+		for(auto entityNode : Entity::Entity::getList())
+		{
+			Entity::Entity& entity = entityNode.value();
+			entity.isInScenegraph();
+
+			// todo: render if in scenegraph
+		}
+
 		// rendering!
 		glfwSwapBuffers(pGlfwWindow);
 		glfwPollEvents();

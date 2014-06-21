@@ -210,9 +210,9 @@ namespace Scenegraph
 	 */
 	void GraphNode::generateWorldToLocalMatrix()
 	{
-		glm::mat4x4 scale = glm::scale(1f / m_scale);
+		glm::mat4x4 scale = glm::scale(1.f / m_scale);
 		glm::mat4x4 rot = glm::mat4_cast(glm::conjugate(m_rotation));
-		glm::mat4x4 translation = glm::translate(-m_position);
+		glm::mat4x4 trans = glm::translate(-m_position);
 
 		glm::mat4x4 local = scale * rot * trans;
 		if (m_pParent)
