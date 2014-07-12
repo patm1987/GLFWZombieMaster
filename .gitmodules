@@ -1,3 +1,6 @@
 [submodule "libs/glm"]
 	path = libs/glm
 	url = git@github.com:patm1987/glm.git
+[submodule "libs/cotire"]
+	path = libs/cotire
+	url = git@github.com:patm1987/cotire.git

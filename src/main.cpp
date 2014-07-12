@@ -16,7 +16,12 @@ int main()
 		return -1;
 	}
 
-	pGlfwWindow = glfwCreateWindow(kWindowWidth, kWindowHeight, kWindowTitle, nullptr, nullptr);
+	pGlfwWindow = glfwCreateWindow(
+				kWindowWidth,
+				kWindowHeight,
+				kWindowTitle,
+				nullptr,
+				nullptr);
 	if (!pGlfwWindow)
 	{
 		glfwTerminate();
@@ -25,8 +30,15 @@ int main()
 
 	glfwMakeContextCurrent(pGlfwWindow);
 
+	// temp variables to store the screen dimensions in
+	// TODO: move screen management into some renderer, display, or screen class
+	int screenWidth, screenHeight;
 	while(!glfwWindowShouldClose(pGlfwWindow))
 	{
+		// setup the viewport
+		glfwGetFramebufferSize(pGlfwWindow, &screenWidth, &screenHeight);
+		glViewport(0, 0, screenWidth, screenHeight);
+
 		for(auto entityNode : Entity::Entity::getList())
 		{
 			Entity::Entity& entity = entityNode.value();

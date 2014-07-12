@@ -8,9 +8,23 @@ namespace Utils
 	 * \param pT a pointer to the object we want to delete
 	 */
 	template<typename T>
-	static void safeFree(T* pT)
+	static void safeDelete(T*& pT)
 	{
-		if (pT != nullptr) { delete pT; }
+		if (pT != nullptr)
+		{
+			delete pT;
+			pT = nullptr;
+		}
+	}
+
+	template<typename T>
+	static void safeDeleteArray(T*& paT)
+	{
+		if (paT != nullptr)
+		{
+			delete[] paT;
+			paT = nullptr;
+		}
 	}
 }
 

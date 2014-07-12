@@ -57,6 +57,6 @@ namespace Entity
 			return;
 		}
 
-		Utils::safeFree(m_pNode);
+		Utils::safeDelete(m_pNode);
 	}
 }
