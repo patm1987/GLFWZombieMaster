@@ -22,17 +22,17 @@ namespace Entity
 
 	void Renderable::setGeometry(const GeometryData& geometryData)
 	{
-		clearGeometryData();
-		memcpy(
-			m_geometryData.aIndexData,
-			geometryData.aIndexData,
-			sizeof(uint16_t) * geometryData.indexDataCount);
-		m_geometryData.indexDataCount = geometryData.indexDataCount;
-		memcpy(
-			m_geometryData.aVertexData,
-			geometryData.aVertexData,
-			sizeof(uint16_t) * geometryData.vertexDataCount);
-		m_geometryData.vertexDataCount = geometryData.vertexDataCount;
+//		clearGeometryData();
+//		memcpy(
+//			m_geometryData.aIndexData,
+//			geometryData.aIndexData,
+//			sizeof(uint16_t) * geometryData.indexDataCount);
+//		m_geometryData.indexDataCount = geometryData.indexDataCount;
+//		memcpy(
+//			m_geometryData.aVertexData,
+//			geometryData.aVertexData,
+//			sizeof(uint16_t) * geometryData.vertexDataCount);
+//		m_geometryData.vertexDataCount = geometryData.vertexDataCount;
 	}
 
 	void Renderable::clearGeometryData()
@@ -45,6 +45,6 @@ namespace Entity
 
 	void Renderable::initBuffers()
 	{
-		m_objectBuffer = glGen
+//		m_objectBuffer = glGen
 	}
 }
