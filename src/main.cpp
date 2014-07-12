@@ -1,4 +1,3 @@
-#include <GLFW/glfw3.h>
 
 #include "entity/entity.h"
 #include "utils/autolist.h"

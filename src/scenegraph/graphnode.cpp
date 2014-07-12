@@ -1,6 +1,5 @@
 #include "graphnode.h"
 
-#include <algorithm>
 #include <glm/gtx/transform.hpp>
 
 namespace Scenegraph

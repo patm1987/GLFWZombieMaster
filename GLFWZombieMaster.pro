@@ -2,6 +2,8 @@ TEMPLATE = app
 CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
+CONFIG += precompile_header
+PRECOMPILED_HEADER = stdafx.h
 
 INCLUDEPATH += libs/glm
 
@@ -26,7 +28,8 @@ HEADERS += \
     src/scenegraph/scenegraph.h \
     src/entity/camera.h \
     src/entity/entity.h \
-    src/entity/renderable.h
+    src/entity/renderable.h \
+    stdafx.h
 
 INCLUDEPATH += src
 
