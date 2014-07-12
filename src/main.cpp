@@ -27,6 +27,20 @@ int main()
 		return -1;
 	}
 
+	// startup gl3w -- for great good!
+	if(gl3wInit())
+	{
+		glfwTerminate();
+		return -1;
+	}
+
+	// checking for gl 3.2
+	if (!gl3wIsSupported(3, 2))
+	{
+		glfwTerminate();
+		return -1;
+	}
+
 	glfwMakeContextCurrent(pGlfwWindow);
 
 	// temp variables to store the screen dimensions in

@@ -26,6 +26,12 @@ namespace Entity
 			int32_t indexDataCount;
 		};
 
+		enum class VertexAttributes
+		{
+			Position,
+			Normal
+		};
+
 	public:
 		Renderable();
 		~Renderable();
@@ -38,14 +44,20 @@ namespace Entity
 
 	private:
 		void clearGeometryData();
-		void initBuffers();
 
-		GLuint m_objectBuffer;
+		GLuint m_vertexBuffer; //!< the vertex buffer to draw
+		GLuint m_indexBuffer; //!< the index buffer to draw
 
 		/*!
 		 * \brief the color of the object to render
 		 */
 		glm::vec4 m_color;
+
+		/*!
+		 * \brief the geometry needed
+		 * \note most of this is uneeded, I can get away with just storing
+		 *	vertex and index counts...
+		 */
 		GeometryData m_geometryData;
 	};
 }

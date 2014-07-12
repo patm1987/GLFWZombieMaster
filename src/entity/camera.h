@@ -53,7 +53,7 @@ namespace Entity
 		 */
 		struct OrthoConfig
 		{
-			float top, bottom, left, right, near, far;
+			float top, bottom, left, right, nearPlane, farPlane;
 			glm::mat4x4 generateMatrix() const;
 			static const ConfigType configType = ConfigType::Orthographic;
 		};
@@ -63,14 +63,14 @@ namespace Entity
 		 */
 		struct PerspectiveConfig
 		{
-			float top, bottom, left, right, near, far;
+			float top, bottom, left, right, nearPlane, farPlane;
 			glm::mat4x4 generateMatrix() const;
 			static const ConfigType configType = ConfigType::Perspective;
 		};
 
 		struct PerspectiveFovConfig
 		{
-			float vfov, aspect, near, far;
+			float vfov, aspect, nearPlane, farPlane;
 			glm::mat4x4 generateMatrix() const;
 			static const ConfigType configType = ConfigType::PerspectiveFov;
 		};
@@ -136,17 +136,17 @@ namespace Entity
 	// matrix generation!
 	inline glm::mat4x4 Camera::OrthoConfig::generateMatrix() const
 	{
-		return glm::ortho(left, right, bottom, top, near, far);
+		return glm::ortho(left, right, bottom, top, nearPlane, farPlane);
 	}
 
 	inline glm::mat4x4 Camera::PerspectiveConfig::generateMatrix() const
 	{
-		return glm::frustum(left, right, bottom, top, near, far);
+		return glm::frustum(left, right, bottom, top, nearPlane, farPlane);
 	}
 
 	inline glm::mat4x4 Camera::PerspectiveFovConfig::generateMatrix() const
 	{
-		return glm::perspective(vfov, aspect, near, far);
+		return glm::perspective(vfov, aspect, nearPlane, farPlane);
 	}
 }
 

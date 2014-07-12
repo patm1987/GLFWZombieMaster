@@ -3,9 +3,10 @@ CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
 CONFIG += precompile_header
-PRECOMPILED_HEADER = stdafx.h
+PRECOMPILED_HEADER = src/stdafx.h
 
-INCLUDEPATH += libs/glm
+INCLUDEPATH += libs/glm \
+	libs/gl3w/include
 
 SOURCES += \
     src/main.cpp \
@@ -17,7 +18,8 @@ SOURCES += \
     src/scenegraph/scenegraph.cpp \
     src/entity/camera.cpp \
     src/entity/entity.cpp \
-    src/entity/renderable.cpp
+    src/entity/renderable.cpp \
+    libs/gl3w/src/gl3w.c
 
 HEADERS += \
     src/renderer.h \
@@ -29,7 +31,9 @@ HEADERS += \
     src/entity/camera.h \
     src/entity/entity.h \
     src/entity/renderable.h \
-    stdafx.h
+	src/stdafx.h \
+    libs/gl3w/include/GL/gl3w.h \
+    libs/gl3w/include/GL/glcorearb.h
 
 INCLUDEPATH += src
 
