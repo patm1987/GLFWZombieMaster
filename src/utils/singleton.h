@@ -23,10 +23,16 @@ namespace Utils
 
 	private:
 		static T* s_pInstance;
+
+		Singleton& operator=(const Singleton&){}
+		Singleton(const Singleton&){}
+
+	protected:
+		Singleton(){}
 	};
 
 	template <typename T>
-	T Singleton<T>::s_pInstance = nullptr;
+	T* Singleton<T>::s_pInstance = nullptr;
 
 	template <typename T>
 	typename Singleton<T>::Errors Singleton<T>::initialize()

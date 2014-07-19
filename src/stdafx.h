@@ -2,6 +2,8 @@
 #define STDAFX_H
 
 #include <algorithm>
+#include <cassert>
+#include <memory>
 #include <vector>
 
 #include <GL/gl3w.h>

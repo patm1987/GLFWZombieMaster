@@ -10,7 +10,6 @@ INCLUDEPATH += libs/glm \
 
 SOURCES += \
     src/main.cpp \
-    src/renderer.cpp \
     src/utils/autolist.cpp \
     src/utils/singleton.cpp \
     src/utils/utils.cpp \
@@ -19,10 +18,11 @@ SOURCES += \
     src/entity/camera.cpp \
     src/entity/entity.cpp \
     src/entity/renderable.cpp \
-    libs/gl3w/src/gl3w.c
+    libs/gl3w/src/gl3w.c \
+    src/renderer/shader.cpp \
+    src/renderer/renderer.cpp
 
 HEADERS += \
-    src/renderer.h \
     src/utils/autolist.h \
     src/utils/singleton.h \
     src/utils/utils.h \
@@ -33,7 +33,9 @@ HEADERS += \
     src/entity/renderable.h \
 	src/stdafx.h \
     libs/gl3w/include/GL/gl3w.h \
-    libs/gl3w/include/GL/glcorearb.h
+    libs/gl3w/include/GL/glcorearb.h \
+    src/renderer/shader.h \
+    src/renderer/renderer.h
 
 INCLUDEPATH += src
 

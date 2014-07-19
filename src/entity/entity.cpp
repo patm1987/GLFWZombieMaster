@@ -11,7 +11,11 @@ namespace Entity
 	 *
 	 * TODO: inline in the header
 	 */
-	Entity::Entity() : AutoList<Entity>(*this), m_pNode(nullptr)
+	Entity::Entity() :
+		AutoList<Entity>(*this),
+		m_pNode(nullptr),
+		m_upRenderable(nullptr),
+		m_upCamera(nullptr)
 	{
 	}
 

@@ -1,5 +1,8 @@
 
 #include "entity/entity.h"
+#include "entity/renderable.h"
+#include "renderer/renderer.h"
+#include "renderer/shader.h"
 #include "utils/autolist.h"
 
 static const int kWindowWidth = 640;
@@ -43,6 +46,12 @@ int main()
 
 	glfwMakeContextCurrent(pGlfwWindow);
 
+	Renderer::Renderer::initialize();
+	Renderer::Renderer& renderer = Renderer::Renderer::instance();
+
+	Entity::Entity camera; // TODO: build me!
+	Renderer::Shader shader; // TODO: build me!
+
 	// temp variables to store the screen dimensions in
 	// TODO: move screen management into some renderer, display, or screen class
 	int screenWidth, screenHeight;
@@ -52,12 +61,18 @@ int main()
 		glfwGetFramebufferSize(pGlfwWindow, &screenWidth, &screenHeight);
 		glViewport(0, 0, screenWidth, screenHeight);
 
+		renderer.setShader(&shader);
+		renderer.setCamera(&camera);
+
 		for(auto entityNode : Entity::Entity::getList())
 		{
 			Entity::Entity& entity = entityNode.value();
-			entity.isInScenegraph();
 
-			// todo: render if in scenegraph
+			Entity::Renderable* pRenderable = entity.getRenderable();
+			if (entity.isInScenegraph() && pRenderable)
+			{
+				renderer.renderObject(entity);
+			}
 		}
 
 		// rendering!
