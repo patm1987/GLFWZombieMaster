@@ -15,6 +15,7 @@ int main()
 
 	if (!glfwInit())
 	{
+		std::cerr << "Failed to initialize GLFW" << std::endl;
 		return -1;
 	}
 
@@ -27,13 +28,17 @@ int main()
 	if (!pGlfwWindow)
 	{
 		glfwTerminate();
+		std::cerr << "Failed to create a glfw window" << std::endl;
 		return -1;
 	}
 
+	glfwMakeContextCurrent(pGlfwWindow);
+
 	// startup gl3w -- for great good!
-	if(gl3wInit())
+	if(auto err = gl3wInit())
 	{
 		glfwTerminate();
+		std::cerr << "Failed to init gl3w with " << err << std::endl;
 		return -1;
 	}
 
@@ -41,10 +46,9 @@ int main()
 	if (!gl3wIsSupported(3, 2))
 	{
 		glfwTerminate();
+		std::cerr << "Your system doesn't support gl 3.2" << std::endl;
 		return -1;
 	}
-
-	glfwMakeContextCurrent(pGlfwWindow);
 
 	Renderer::Renderer::initialize();
 	Renderer::Renderer& renderer = Renderer::Renderer::instance();
